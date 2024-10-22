@@ -4,7 +4,7 @@ import { useWallet } from '@txnlab/use-wallet'
 import { useSnackbar } from 'notistack'
 import { useState } from 'react'
 import { AppDetails } from '@algorandfoundation/algokit-utils/types/app-client'
-import { FarmShieldClient } from '../contracts/FarmShield'
+// import { FarmShieldClient } from '../contracts/FarmShield'
 import { OnSchemaBreak, OnUpdate } from '@algorandfoundation/algokit-utils/types/app'
 import { getAlgodConfigFromViteEnvironment, getIndexerConfigFromViteEnvironment } from '../utils/network/getAlgoClientConfigs'
 
