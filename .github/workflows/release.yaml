@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+      - '.vscode/**'
+      - '.idea/**'
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  farm-shield-contracts-validate:
+    name: Run farm-shield-contracts release
+    secrets: inherit
+    uses: ./.github/workflows/farm-shield-contracts-ci.yaml
+
+  farm-shield-contracts-release:
+    name: Run farm-shield-contracts release
+    secrets: inherit
+    uses: ./.github/workflows/farm-shield-contracts-cd.yaml
+    needs: farm-shield-contracts-validate
+
+  farm-shield-frontend-validate:
+    name: Run farm-shield-frontend release
+    secrets: inherit
+    uses: ./.github/workflows/farm-shield-frontend-ci.yaml
+
+  farm-shield-frontend-release:
+    name: Run farm-shield-frontend release
+    secrets: inherit
+    uses: ./.github/workflows/farm-shield-frontend-cd.yaml
+    needs: farm-shield-frontend-validate
