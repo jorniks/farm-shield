@@ -1,9 +1,9 @@
 // src/components/Home.tsx
 import { useWallet } from '@txnlab/use-wallet'
 import React, { useState } from 'react'
+import AppCalls from './components/AppCalls'
 import ConnectWallet from './components/ConnectWallet'
 import Transact from './components/Transact'
-import AppCalls from './components/AppCalls'
 
 interface HomeProps {}
 
@@ -26,11 +26,11 @@ const Home: React.FC<HomeProps> = () => {
   }
 
   return (
-    <div className="hero min-h-screen bg-teal-400">
-      <div className="hero-content text-center rounded-lg p-6 max-w-md bg-white mx-auto">
+    <div className="min-h-screen bg-teal-400 hero">
+      <div className="max-w-md p-6 mx-auto text-center bg-white rounded-lg hero-content">
         <div className="max-w-md">
           <h1 className="text-4xl">
-            Welcome to <div className="font-bold">AlgoKit 🙂</div>
+            Welcome to <div className="font-bold">Farm Shield 🙂</div>
           </h1>
           <p className="py-6">
             This starter has been generated using official AlgoKit React template. Refer to the resource below for next steps.
@@ -39,7 +39,7 @@ const Home: React.FC<HomeProps> = () => {
           <div className="grid">
             <a
               data-test-id="getting-started"
-              className="btn btn-primary m-2"
+              className="m-2 btn btn-primary"
               target="_blank"
               href="https://github.com/algorandfoundation/algokit-cli"
             >
@@ -47,18 +47,18 @@ const Home: React.FC<HomeProps> = () => {
             </a>
 
             <div className="divider" />
-            <button data-test-id="connect-wallet" className="btn m-2" onClick={toggleWalletModal}>
+            <button data-test-id="connect-wallet" className="m-2 btn" onClick={toggleWalletModal}>
               Wallet Connection
             </button>
 
             {activeAddress && (
-              <button data-test-id="transactions-demo" className="btn m-2" onClick={toggleDemoModal}>
+              <button data-test-id="transactions-demo" className="m-2 btn" onClick={toggleDemoModal}>
                 Transactions Demo
               </button>
             )}
 
             {activeAddress && (
-              <button data-test-id="appcalls-demo" className="btn m-2" onClick={toggleAppCallsModal}>
+              <button data-test-id="appcalls-demo" className="m-2 btn" onClick={toggleAppCallsModal}>
                 Contract Interactions Demo
               </button>
             )}

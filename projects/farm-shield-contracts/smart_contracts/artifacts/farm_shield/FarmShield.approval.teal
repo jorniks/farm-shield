@@ -1,0 +1,270 @@
+#pragma version 10
+
+smart_contracts.farm_shield.contract.FarmShield.approval_program:
+    callsub __puya_arc4_router__
+    return
+
+
+// smart_contracts.farm_shield.contract.FarmShield.__puya_arc4_router__() -> uint64:
+__puya_arc4_router__:
+    proto 0 1
+    txn NumAppArgs
+    bz __puya_arc4_router___after_if_else@10
+    method "createApplication(asset,uint64,uint64)void"
+    method "optInToAsset(pay)void"
+    method "extend_premium(uint64)void"
+    method "purchase_premium(pay,uint64)void"
+    method "deleteApplication()void"
+    txna ApplicationArgs 0
+    match __puya_arc4_router___createApplication_route@2 __puya_arc4_router___optInToAsset_route@3 __puya_arc4_router___extend_premium_route@4 __puya_arc4_router___purchase_premium_route@5 __puya_arc4_router___deleteApplication_route@6
+    int 0
+    retsub
+
+__puya_arc4_router___createApplication_route@2:
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    !
+    assert // is creating
+    txna ApplicationArgs 1
+    btoi
+    txnas Assets
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    btoi
+    callsub createApplication
+    int 1
+    retsub
+
+__puya_arc4_router___optInToAsset_route@3:
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    txn GroupIndex
+    int 1
+    -
+    dup
+    gtxns TypeEnum
+    int pay
+    ==
+    assert // transaction type is pay
+    callsub optInToAsset
+    int 1
+    retsub
+
+__puya_arc4_router___extend_premium_route@4:
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    txna ApplicationArgs 1
+    btoi
+    callsub extend_premium
+    int 1
+    retsub
+
+__puya_arc4_router___purchase_premium_route@5:
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    txn GroupIndex
+    int 1
+    -
+    dup
+    gtxns TypeEnum
+    int pay
+    ==
+    assert // transaction type is pay
+    txna ApplicationArgs 1
+    btoi
+    callsub purchase_premium
+    int 1
+    retsub
+
+__puya_arc4_router___deleteApplication_route@6:
+    txn OnCompletion
+    int DeleteApplication
+    ==
+    assert // OnCompletion is DeleteApplication
+    txn ApplicationID
+    assert // is not creating
+    callsub deleteApplication
+    int 1
+    retsub
+
+__puya_arc4_router___after_if_else@10:
+    int 0
+    retsub
+
+
+// smart_contracts.farm_shield.contract.FarmShield.createApplication(policy_id: uint64, coverage_price: uint64, duration: uint64) -> void:
+createApplication:
+    proto 3 0
+    byte "policy_id"
+    frame_dig -3
+    app_global_put
+    byte "coverage_price"
+    frame_dig -2
+    app_global_put
+    byte "duration"
+    frame_dig -1
+    app_global_put
+    retsub
+
+
+// smart_contracts.farm_shield.contract.FarmShield.optInToAsset(mbrPay: uint64) -> void:
+optInToAsset:
+    proto 1 0
+    txn Sender
+    global CurrentApplicationAddress
+    ==
+    assert
+    global CurrentApplicationAddress
+    int 0
+    byte "policy_id"
+    app_global_get_ex
+    assert // check self.policy_id exists
+    asset_holding_get AssetBalance
+    bury 1
+    !
+    assert
+    frame_dig -1
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert
+    frame_dig -1
+    gtxns Amount
+    global MinBalance
+    global AssetOptInMinBalance
+    +
+    ==
+    assert
+    itxn_begin
+    int 0
+    byte "policy_id"
+    app_global_get_ex
+    assert // check self.policy_id exists
+    global CurrentApplicationAddress
+    int 0
+    itxn_field AssetAmount
+    itxn_field AssetReceiver
+    itxn_field XferAsset
+    int axfer
+    itxn_field TypeEnum
+    int 0
+    itxn_field Fee
+    itxn_submit
+    retsub
+
+
+// smart_contracts.farm_shield.contract.FarmShield.extend_premium(duration: uint64) -> void:
+extend_premium:
+    proto 1 0
+    frame_dig -1
+    assert
+    txn Sender
+    global CreatorAddress
+    ==
+    assert
+    byte "duration"
+    frame_dig -1
+    app_global_put
+    retsub
+
+
+// smart_contracts.farm_shield.contract.FarmShield.purchase_premium(buyerTxn: uint64, coverage_price: uint64) -> void:
+purchase_premium:
+    proto 2 0
+    int 0
+    byte "coverage_price"
+    app_global_get_ex
+    assert // check self.coverage_price exists
+    assert
+    txn Sender
+    frame_dig -2
+    gtxns Sender
+    ==
+    assert
+    frame_dig -2
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert
+    frame_dig -2
+    gtxns Amount
+    int 0
+    byte "coverage_price"
+    app_global_get_ex
+    assert // check self.coverage_price exists
+    ==
+    assert
+    itxn_begin
+    int 0
+    byte "policy_id"
+    app_global_get_ex
+    assert // check self.policy_id exists
+    txn Sender
+    frame_dig -1
+    itxn_field AssetAmount
+    itxn_field AssetReceiver
+    itxn_field XferAsset
+    int axfer
+    itxn_field TypeEnum
+    int 0
+    itxn_field Fee
+    itxn_submit
+    txn Sender
+    global CreatorAddress
+    ==
+    assert
+    byte "coverage_price"
+    frame_dig -1
+    app_global_put
+    retsub
+
+
+// smart_contracts.farm_shield.contract.FarmShield.deleteApplication() -> void:
+deleteApplication:
+    proto 0 0
+    txn Sender
+    global CreatorAddress
+    ==
+    assert
+    itxn_begin
+    int 0
+    byte "policy_id"
+    app_global_get_ex
+    assert // check self.policy_id exists
+    global CreatorAddress
+    dup
+    itxn_field AssetCloseTo
+    int 0
+    itxn_field AssetAmount
+    itxn_field AssetReceiver
+    itxn_field XferAsset
+    int axfer
+    itxn_field TypeEnum
+    int 0
+    itxn_field Fee
+    itxn_submit
+    itxn_begin
+    global CreatorAddress
+    dup
+    itxn_field CloseRemainderTo
+    int 0
+    itxn_field Amount
+    itxn_field Receiver
+    int pay
+    itxn_field TypeEnum
+    int 0
+    itxn_field Fee
+    itxn_submit
+    retsub
