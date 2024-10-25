@@ -1,5 +1,0 @@
-#pragma version 10
-
-smart_contracts.farm_shield.contract.FarmShield.clear_state_program:
-    int 1
-    return
