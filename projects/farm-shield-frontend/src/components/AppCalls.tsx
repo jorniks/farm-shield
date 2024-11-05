@@ -1,10 +1,9 @@
-
 import * as algokit from '@algorandfoundation/algokit-utils'
 import { TransactionSignerAccount } from '@algorandfoundation/algokit-utils/types/account'
+import { AppDetails } from '@algorandfoundation/algokit-utils/types/app-client'
 import { useWallet } from '@txnlab/use-wallet'
 import { useSnackbar } from 'notistack'
 import { useState } from 'react'
-import { AppDetails } from '@algorandfoundation/algokit-utils/types/app-client'
 //import { FarmShieldClient } from '../contracts/FarmShield'
 import { OnSchemaBreak, OnUpdate } from '@algorandfoundation/algokit-utils/types/app'
 import { getAlgodConfigFromViteEnvironment, getIndexerConfigFromViteEnvironment } from '../utils/network/getAlgoClientConfigs'
@@ -49,36 +48,34 @@ const AppCalls = ({ openModal, setModalState }: AppCallsInterface) => {
       findExistingUsing: indexer,
     } as AppDetails
 
-    const appClient = new FarmShieldClient(appDetails, algodClient)
+    //  const appClient = new FarmShieldClient(appDetails, algodClient)
     const deployParams = {
-      onSchemaBreak: OnSchemaBreak.AppendApp,
-      onUpdate: OnUpdate.AppendApp,
+      //   onSchemaBreak: OnSchemaBreak.AppendApp,
+      //   onUpdate: OnUpdate.AppendApp,
+      // }
+      // await appClient.deploy(deployParams).catch((e: Error) => {
+      //   enqueueSnackbar(`Error deploying the contract: ${e.message}`, { variant: 'error' })
+      //   setLoading(false)
+      //   return
+      // })
+      // const response = await appClient.hello({ name: contractInput }).catch((e: Error) => {
+      //   enqueueSnackbar(`Error calling the contract: ${e.message}`, { variant: 'error' })
+      //   setLoading(false)
+      //   return
+      // })
+      // enqueueSnackbar(`Response from the contract: ${response?.return}`, { variant: 'success' })
+      // setLoading(false)
     }
-    await appClient.deploy(deployParams).catch((e: Error) => {
-      enqueueSnackbar(`Error deploying the contract: ${e.message}`, { variant: 'error' })
-      setLoading(false)
-      return
-    })
-
-    const response = await appClient.hello({ name: contractInput }).catch((e: Error) => {
-      enqueueSnackbar(`Error calling the contract: ${e.message}`, { variant: 'error' })
-      setLoading(false)
-      return
-    })
-
-    enqueueSnackbar(`Response from the contract: ${response?.return}`, { variant: 'success' })
-    setLoading(false)
   }
-
   return (
     <dialog id="appcalls_modal" className={`modal ${openModal ? 'modal-open' : ''} bg-slate-200`}>
       <form method="dialog" className="modal-box">
-        <h3 className="font-bold text-lg">Say hello to your Algorand smart contract</h3>
+        <h3 className="text-lg font-bold">Say hello to your Algorand smart contract</h3>
         <br />
         <input
           type="text"
           placeholder="Provide input to hello function"
-          className="input input-bordered w-full"
+          className="w-full input input-bordered"
           value={contractInput}
           onChange={(e) => {
             setContractInput(e.target.value)

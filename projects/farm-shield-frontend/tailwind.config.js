@@ -1,19 +1,22 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-  darkMode: "class",
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        primary: "#2EA15C",
-        secondary: "#2C2C2C",
+        primary: '#2EA15C',
+        secondary: '#2C2C2C',
       },
       fontFamily: {
-        sans: ["Montserrat", "sans-serif"],
-        poppins: ["Poppins", "sans-serif"],
-        inter: ["Inter", "sans-serif"],
+        sans: ['Montserrat', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
       },
     },
   },
-  plugins: [],
-};
+  daisyui: {
+    themes: ['lofi'],
+  },
+ // plugins: [require('daisyui')],
+}

@@ -1,8 +1,12 @@
-import { ThemeButton } from "./ThemeBtn";
 import userImg from "../assets/user-img.png";
 import { useTheme } from "../hooks/theme";
+import { ThemeButton } from "./ThemeBtn";
 export const DashboardHeader = () => {
   const { theme, toggleTheme } = useTheme();
+  // const { providers,activeAddress } = useWallet();
+  // providers?.map((provider) => {
+  //   provider.
+  // })
 
   return (
     <header className="w-full flex justify-between px-10 py-[29px] bg-white dark:bg-[#1E1E1E] ">
