@@ -1,26 +1,25 @@
 import { DeflyWalletConnect } from "@blockshake/defly-connect";
 import { DaffiWalletConnect } from "@daffiwallet/connect";
 import { PeraWalletConnect } from "@perawallet/connect";
-import { PROVIDER_ID, ProvidersArray, WalletProvider, useInitializeProviders } from "@txnlab/use-wallet";
+import { PROVIDER_ID, ProvidersArray, useInitializeProviders, WalletProvider } from "@txnlab/use-wallet";
 import algosdk from "algosdk";
-import { SnackbarProvider } from "notistack";
-import Home from "./Home";
 
 import { getAlgodConfigFromViteEnvironment, getKmdConfigFromViteEnvironment } from "./utils/network/getAlgoClientConfigs";
 /*
 Pages
 */
-import { HomeLayout } from "./pages/Layout";
-import { HomePage } from "./pages/Home";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { AuthPage } from "./pages/onboarding/Auth";
-import { DashboardLayout } from "./pages/dashboard/DashboardLayout";
-import { Dashboard } from "./pages/dashboard/Dashboard";
-import { Claim } from "./pages/dashboard/Claim";
-import { Policies } from "./pages/dashboard/Policies";
-import { Payments } from "./pages/dashboard/Payments";
-let providersArray: ProvidersArray;
 import { useEffect } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Claim } from "./pages/dashboard/Claim";
+import { Dashboard } from "./pages/dashboard/Dashboard";
+import { DashboardLayout } from "./pages/dashboard/DashboardLayout";
+import { InsurancePage } from "./pages/dashboard/Insurance";
+import { Payments } from "./pages/dashboard/Payments";
+import { Policies } from "./pages/dashboard/Policies";
+import { HomePage } from "./pages/Home";
+import { HomeLayout } from "./pages/Layout";
+import { AuthPage } from "./pages/onboarding/Auth";
+let providersArray: ProvidersArray;
 if (import.meta.env.VITE_ALGOD_NETWORK === "") {
   const kmdConfig = getKmdConfigFromViteEnvironment();
   providersArray = [
@@ -100,17 +99,21 @@ export default function App() {
         {
           path: "payments",
           element: <Payments />,
-        }
+        },
+
+        {
+          path: ":insurance",
+          element: <InsurancePage />,
+        },
       ],
     },
   ]);
   return (
-    <RouterProvider router={routes}></RouterProvider>
     // <h1 className="text-primary">Hello world from FarmShield</h1>
     // <SnackbarProvider maxSnack={3}>
-    //   <WalletProvider value={walletProviders}>
-    //     <Home />
-    //   </WalletProvider>
+    <WalletProvider value={walletProviders}>
+      <RouterProvider router={routes}></RouterProvider>
+    </WalletProvider>
     // </SnackbarProvider>
   );
 }

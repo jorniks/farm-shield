@@ -1,14 +1,14 @@
-import { Badge } from "../../components/Badge";
-import { FC } from "react";
-import { ClaimTable } from "../../components/ClaimTable";
+import { FC } from 'react';
+import { Badge } from '../../components/Badge';
+import { ClaimTable } from '../../components/ClaimTable';
 const BadgeList: FC<{ title: string; value: string }> = ({ title, value }) => {
   return (
     <div className="flex gap-2 p-3 rounded-xl border border-[#6A6A6A1F] bg-[#282A2A66] items-center font-inter text-sm ">
-      <span className="text-[#6A6A6A] font-normal " >{title}</span>
-      <span className="font-medium text-primary" >{value}</span>
+      <span className="text-[#6A6A6A] font-normal ">{title}</span>
+      <span className="font-medium text-primary">{value}</span>
     </div>
-  );
-};
+  )
+}
 export const Dashboard = () => {
   return (
     <div className="flex flex-col gap-2 w-full ">
@@ -38,9 +38,9 @@ export const Dashboard = () => {
             </div>
             <ul className="flex flex-col gap-2">
               {[
-                { title: "Type", value: "Crop" },
-                { title: "Monthly", value: "Premium" },
-                { title: "Current Status", value: "Active" },
+                { title: 'Type', value: 'Crop' },
+                { title: 'Monthly', value: 'Premium' },
+                { title: 'Current Status', value: 'Active' },
               ].map(({ title, value }) => (
                 <BadgeList title={title} value={value} />
               ))}
@@ -79,9 +79,9 @@ export const Dashboard = () => {
             </div>
             <ul className="flex flex-col gap-2">
               {[
-                { title: "Type", value: "Crop" },
-                { title: "Monthly", value: "Premium" },
-                { title: "Current Status", value: "Claim Pending" },
+                { title: 'Type', value: 'Crop' },
+                { title: 'Monthly', value: 'Premium' },
+                { title: 'Current Status', value: 'Claim Pending' },
               ].map(({ title, value }) => (
                 <BadgeList title={title} value={value} />
               ))}
@@ -108,9 +108,9 @@ export const Dashboard = () => {
             </div>
             <ul className="flex flex-col gap-2">
               {[
-                { title: "Type", value: "Crop" },
-                { title: "Monthly", value: "Premium" },
-                { title: "Current Status", value: "Pending" },
+                { title: 'Type', value: 'Crop' },
+                { title: 'Monthly', value: 'Premium' },
+                { title: 'Current Status', value: 'Pending' },
               ].map(({ title, value }) => (
                 <BadgeList title={title} value={value} />
               ))}
@@ -124,5 +124,5 @@ export const Dashboard = () => {
         <ClaimTable />
       </section>
     </div>
-  );
-};
+  )
+}
