@@ -21,6 +21,16 @@ This starter full stack project has been generated using AlgoKit. See below for 
 1. If you update to the latest source code and there are new dependencies, you will need to run `algokit project bootstrap all` again.
 2. Follow step 3 above.
 
+### Continuous Integration / Continuous Deployment (CI/CD)
+
+This project uses [GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions) to define CI/CD workflows, which are located in the [`.github/workflows`](./.github/workflows) folder. You can configure these actions to suit your project's needs, including CI checks, audits, linting, type checking, testing, and deployments to TestNet.
+
+For pushes to `main` branch, after the above checks pass, the following deployment actions are performed:
+  - The smart contract(s) are deployed to TestNet using [AlgoNode](https://algonode.io).
+  - The frontend application is deployed to a provider of your choice (Netlify, Vercel, etc.). See [frontend README](frontend/README.md) for more information.
+
+> Please note deployment of smart contracts is done via `algokit deploy` command which can be invoked both via CI as seen on this project, or locally. For more information on how to use `algokit deploy` please see [AlgoKit documentation](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/deploy.md).
+
 ## Tools
 
 This project makes use of Python and React to build Algorand smart contracts and to provide a base project configuration to develop frontends for your Algorand dApps and interactions with smart contracts. The following tools are in use:

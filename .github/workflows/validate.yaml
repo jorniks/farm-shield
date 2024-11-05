@@ -1,0 +1,14 @@
+name: Pull Request validation
+
+on: [pull_request]
+
+
+jobs:
+  farm-shield-contracts-ci:
+    name: Run farm-shield-contracts validation
+    uses: ./.github/workflows/farm-shield-contracts-ci.yaml
+
+  farm-shield-frontend-ci:
+    name: Run farm-shield-frontend validation
+    uses: ./.github/workflows/farm-shield-frontend-ci.yaml
+
