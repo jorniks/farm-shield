@@ -18,5 +18,6 @@ export default {
   daisyui: {
     themes: ['lofi'],
   },
- // plugins: [require('daisyui')],
+  plugins: [require('daisyui')],
 }
+
